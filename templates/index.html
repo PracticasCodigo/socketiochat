@@ -3,38 +3,16 @@
 
 <head>
 <meta charset="UTF-8">
-<title>Login</title>
+<title>Inicio</title>
 
 </head>
 
 <body>
 
-    <div id="app">
+    <a href="{{url_for('chat')}}">Chat</a>
+    <a href="{{url_for('botonera')}}">botonera</a>
+    <a href="{{url_for('cliente')}}">cliente</a>
 
-        <label>Nombre:</label>
-        <input id="user" name="user">
-
-        <button id="iniciarChar" type="submit" onclick="iniciarSession()">Iniciar Session</button>
-
-    </div>
-
-    <div id="chat">
-    </div>
-
-    <div>        
-        <label>Mensaje:</label>
-        <input id="message" name="message">
-        <button id="enviarMensaje" name="enviarMensaje" type="submit" onclick="enviarMensaje()">Enviar mensaje</button>
-
-    </div>
-
-    
-    <div id="usuarios">
-
-    </div>
-    <!-- JS Libraies -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.0.4/socket.io.js" integrity="sha512-aMGMvNYu8Ue4G+fHa359jcPb1u+ytAF+P2SCb+PxrjCdO3n3ZTxJ30zuH39rimUggmTwmh2u7wvQsDTHESnmfQ==" crossorigin="anonymous"></script>
-    <script src="/static/js/chat.js"></script>
 </body>
 
 </html>

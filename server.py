@@ -13,7 +13,7 @@ Session(app)
 # login = LoginManager(app)
 socketio = SocketIO(app, manage_session=False)
 
-usuarios = []
+id_cliente = None
 
 
 # class User(UserMixin, object):
@@ -30,9 +30,29 @@ def index():
     if request.method == "GET":
         return render_template('index.html')
 
+@app.route('/chat', methods=["GET"])
+def chat():
+    if request.method == "GET":
+        return render_template('chat.html')
+
+@app.route('/botonera', methods=["GET"])
+def botonera():
+    if request.method == "GET":
+        return render_template('botonera.html')
+
+@app.route('/cliente', methods=["GET"])
+def cliente():
+    if request.method == "GET":
+        return render_template('cliente.html')
+
 @socketio.event
-def connect():
-    emit('my_response', {'data': 'Connected'})
+def id_Cliente():
+    print(request.sid)
+    join_room(request.sid)
+
+# @socketio.event
+# def connect():
+#     emit('my_response', {'data': 'Connected'})
 
 @socketio.event
 def iniciarSession(data):
@@ -40,17 +60,20 @@ def iniciarSession(data):
     emit('my_response', {'data': data['nombre']})
 
 @socketio.event
+def accion(data):
+    sid = data.get('sid')
+    emit('my_response', {'data': data['accion']}, room=sid)
+
+@socketio.event
 def mensaje(data):
     nombre = session.get('nombre') if session.get('nombre') else 'anonymous'
     emit('my_response', {'data': nombre + ': ' + data['message']}, broadcast=True)
-
 
 @socketio.event
 def join(message):
     join_room(message['room'])
     emit('my_response',
          {'data': 'In rooms: ' + ', '.join(rooms())})
-
 
 if __name__ == '__main__':
     socketio.run(app)
